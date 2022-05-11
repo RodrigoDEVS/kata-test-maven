@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BasicCalculatorTest {
 
@@ -69,7 +70,7 @@ public class BasicCalculatorTest {
     }
 
     @Test
-    @DisplayName("Testing multiplicacion: 1*1=1")
+    @DisplayName("Testing multiplicación: 1*1=1")
     public void multiplicacion() {
         // Arrange
         Long number1 = 1L;
@@ -77,7 +78,7 @@ public class BasicCalculatorTest {
         Long expectedValue = 1L;
 
         // Act
-        Long result = basicCalculator.multiplicación(number1, number2);
+        Long result = basicCalculator.multiplicacion(number1, number2);
 
         // Assert
         assertEquals(expectedValue, result);
@@ -92,7 +93,7 @@ public class BasicCalculatorTest {
             "5,  4, 20"
     })
     public void severalMultiplicaciones(Long first, Long second, Long expectedResult) {
-        assertEquals(expectedResult, basicCalculator.multiplicación(first, second),
+        assertEquals(expectedResult, basicCalculator.multiplicacion(first, second),
                 () -> first + " * " + second + " should equal " + expectedResult);
     }
 
@@ -122,5 +123,16 @@ public class BasicCalculatorTest {
     public void severalDivisiones(Long first, Long second, Long expectedResult) {
         assertEquals(expectedResult, basicCalculator.division(first, second),
                 () -> first + " / " + second + " should equal " + expectedResult);
+    }
+
+    @Test
+    @DisplayName("Testing división: 1/1=1")
+    public void divisionCero() {
+        Long number1 = 1L;
+        Long number2 = 0L;
+
+        assertThrows(ArithmeticException.class, () -> {
+            Long result = basicCalculator.division(number1, number2);
+        });
     }
 }
